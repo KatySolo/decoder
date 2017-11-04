@@ -11,7 +11,7 @@ class TestTransformToNumberSequence (unittest.TestCase):
         self.assertEqual(decoder.transform_to_number_sequence(input_string),number_sequence)
 
 
-class TestSplitText (unittest.TestCase):
+class TestSplitText(unittest.TestCase):
 
     def test_split_test(self):
         input_text = "Hi! My name is Kate? I am nineteen years old, are not I?"
@@ -24,7 +24,7 @@ class TestSeparationToBuckets(unittest.TestCase):
 
     def separate_to_buckets_test(self):
         input_words_array = ["Hi","My","name","is","Kate","I","am","nineteen","years","old","are","not","I"]
-        expected = {'1':{'I','I'},'2':{'Hi','My','is','am'},'3':{'old','are','not'},'4':{'name','Kate'},'5':{'years'},'8':{'nineteen'}}
+        expected = {1:['I','I'],2:['Hi','My','is','am'],3:['old','are','not'],4:['name','Kate'],5:['years'],8:['nineteen']}
         self.assertEqual(decoder.separate_to_buckets(input_words_array),expected)
 
 
