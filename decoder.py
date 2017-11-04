@@ -1,5 +1,8 @@
+import re
+
+
 def split_text(input_text):
-    return input_text.split(',?!.')
+    return re.findall(r"[\w']+", input_text)
 
 def transform_to_number_sequence (input_string):
     letters = {}

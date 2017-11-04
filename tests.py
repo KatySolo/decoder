@@ -15,7 +15,8 @@ class TestSplitTest (unittest.TestCase):
     def test_split_test(self):
         input_text = "Hi! My name is Kate? I am nineteen years old, are not I?"
         splitted_text = ["Hi","My","name","is","Kate","I","am","nineteen","years","old","are","not","I"]
-        self.assertEqual(decoder.split_text(input_text),splitted_text)
+        actual = decoder.split_text(input_text)
+        self.assertEqual(actual,splitted_text)
 
 if __name__ == '__main__':
     unittest.main()
