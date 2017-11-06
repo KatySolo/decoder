@@ -1,4 +1,5 @@
 import re
+import math
 
 
 def split_text(input_text):
@@ -38,6 +39,15 @@ def transform_to_number_sequence (input_string):
     return number_sequence
 
 
+def extract_hundred_sequence_from_buckets(buckets):
+    sequence_buckets = {}
+    for i in buckets.keys():
+        sequence_buckets[i] = []
+        for n in range(min(len(buckets[i]),100)):
+            sequence_buckets[i].append(transform_to_number_sequence(buckets[i][n]))
+    return sequence_buckets
+
 
 if __name__ == '__main__':
-    print (separate_to_buckets(split_text("Hi! My name is Kate? I am nineteen years old, are not I?")))
+    print(separate_to_buckets(split_text("Hi! My name is Kate? I am nineteen years old, are not I?")))
+    print(extract_hundred_sequence_from_buckets(separate_to_buckets(split_text("Hi! My name is Kate? I am nineteen years old, are not I?"))))
