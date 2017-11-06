@@ -22,7 +22,7 @@ class TestSplitText(unittest.TestCase):
 
 class TestSeparationToBuckets(unittest.TestCase):
 
-    def separate_to_buckets_test(self):
+    def test_separate_to_buckets(self):
         input_words_array = ["Hi","My","name","is","Kate","I","am","nineteen","years","old","are","not","I"]
         expected = {1:['I','I'],2:['Hi','My','is','am'],3:['old','are','not'],4:['name','Kate'],5:['years'],8:['nineteen']}
         self.assertEqual(decoder.separate_to_buckets(input_words_array),expected)
@@ -30,16 +30,16 @@ class TestSeparationToBuckets(unittest.TestCase):
 
 class TestTransformationBucketsToSequence(unittest.TestCase):
 
-    def transform_buckets_to_sequence_less_than_hundred(self):
-        expected = {1:['0','0'],2:['01','01','01','01'], 3:['012','012','012'],4:['0123','0123'],5:['01234'],8:[01023220]}
+    def test_transform_buckets_to_sequence_less_than_hundred(self):
+        expected = {1:['0','0'],2:['01','01','01','01'], 3:['012','012','012'],4:['0123','0123'],5:['01234'],8:['01023220']}
         actual = decoder.extract_hundred_sequence_from_buckets({1:['I','I'],2:['Hi','My','is','am'],3:['old','are','not'],4:['name','Kate'],5:['years'],8:['nineteen']})
         self.assertEqual(expected,actual)
 
-    def transform_buckets_to_sequence_more_than_hundred(self):
+    def test_transform_buckets_to_sequence_more_than_hundred(self):
         buckets = {}
         sequence_buckets = {}
         three_letters_words = ['aba' for i in range (200)]
-        three_letters_sequences = ['010' for i in range (200)]
+        three_letters_sequences = ['010' for i in range (100)]
         buckets[3] = three_letters_words
         sequence_buckets[3] = three_letters_sequences
         self.assertEqual(sequence_buckets, decoder.extract_hundred_sequence_from_buckets(buckets))
