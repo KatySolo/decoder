@@ -48,12 +48,20 @@ class TestTransformationBucketsToSequence(unittest.TestCase):
         expected = sequence_buckets
         self.assertEqual(actual, expected)
 
-class TestImportBasicEnglishWords(unittest.TestCase):
+class TestImport(unittest.TestCase):
 
     def test_import_words(self):
         expected = ['a','abaca','abba','abbandon','back','buy','c','care','cat','cd','cry','dimmension']
         actual = decoder.import_basic_english_words('test_words')
         self.assertEqual(expected,actual)
+
+    def test_import_text_falure(self):
+        self.assertRaises(IOError,decoder.import_input_text('bad_input_directory'))
+
+    def test_import_text(self):
+        expected = "Hi! My name is Kate? I am nineteen years old, are not I?"
+        actual = decoder.import_input_text('input')
+        self.assertEqual(expected, actual)
 
 class TestChainTranformation(unittest.TestCase):
 
@@ -63,6 +71,7 @@ class TestChainTranformation(unittest.TestCase):
         actual = decoder.separate_to_buckets(actual)
         actual = decoder.extract_hundred_sequence_from_buckets(actual)
         self.assertEqual(expected,actual)
+
 
 
 if __name__ == '__main__':

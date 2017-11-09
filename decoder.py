@@ -16,6 +16,20 @@ def import_basic_english_words(directory):
     basic_english_words.sort()
     return basic_english_words
 
+def import_input_text(directory):
+    text=""
+    inputDirectory = (directory + '/input.txt', 'input.txt')[directory == '.']
+    try:
+        with open(inputDirectory,'r') as f:
+            for char in f.read():
+                text += char
+        return text
+    except IOError:
+        print ("File not found")
+        return None
+
+
+
 def separate_to_buckets(input_words_array):
     buckets = {}
     for word in input_words_array:
@@ -58,4 +72,7 @@ def extract_hundred_sequence_from_buckets(buckets):
 
 
 if __name__ == '__main__':
-    print ('OK')
+    text = import_input_text()
+    if text is not None:
+        print ('OK')
+        print (text)
