@@ -1,10 +1,19 @@
 import re
-import math
+import os
 
 
 def split_text(input_text):
     return re.findall(r"[\w']+", input_text)
 
+def import_basic_english_words(directory):
+    basic_english_words = []
+    for file in os.listdir(directory + "/"):
+        if file.endswith(".txt"):
+            with open(directory + "/" + file, 'r') as f:
+                for line in f:
+                    basic_english_words.append(line)
+    basic_english_words = [line.rstrip('\n') for line in basic_english_words]
+    return basic_english_words
 
 def separate_to_buckets(input_words_array):
     buckets = {}
@@ -49,5 +58,4 @@ def extract_hundred_sequence_from_buckets(buckets):
 
 
 if __name__ == '__main__':
-    print(separate_to_buckets(split_text("Hi! My name is Kate? I am nineteen years old, are not I?")))
-    print(extract_hundred_sequence_from_buckets(separate_to_buckets(split_text("Hi! My name is Kate? I am nineteen years old, are not I?"))))
+    print ('OK')

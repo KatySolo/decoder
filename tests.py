@@ -44,6 +44,12 @@ class TestTransformationBucketsToSequence(unittest.TestCase):
         sequence_buckets[3] = three_letters_sequences
         self.assertEqual(sequence_buckets, decoder.extract_hundred_sequence_from_buckets(buckets))
 
+class TestImportBasicEnglishWords(unittest.TestCase):
+
+    def test_import_words(self):
+        expected = ['a','ab','abc','b','bc','bcd','c','cd','cde']
+        actual = decoder.import_basic_english_words('test_words')
+        self.assertEqual(expected,actual)
 
 if __name__ == '__main__':
     unittest.main()
