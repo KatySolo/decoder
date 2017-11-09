@@ -51,9 +51,19 @@ class TestTransformationBucketsToSequence(unittest.TestCase):
 class TestImportBasicEnglishWords(unittest.TestCase):
 
     def test_import_words(self):
-        expected = ['a','ab','abc','b','bc','bcd','c','cd','cde']
+        expected = ['a','abaca','abba','abbandon','back','buy','c','care','cat','cd','cry','dimmension']
         actual = decoder.import_basic_english_words('test_words')
         self.assertEqual(expected,actual)
+
+class TestChainTranformation(unittest.TestCase):
+
+    def test_from_import_to_hundred_buckets(self):
+        expected = {1:['0','0'],2:['01'],3:['012','012','012'],4:['0110','0123','0123'],5:['01020'],8:['01102342'],10:['0122345164']}
+        actual = decoder.import_basic_english_words('test_words')
+        actual = decoder.separate_to_buckets(actual)
+        actual = decoder.extract_hundred_sequence_from_buckets(actual)
+        self.assertEqual(expected,actual)
+
 
 if __name__ == '__main__':
     unittest.main()

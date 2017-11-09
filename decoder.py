@@ -13,6 +13,7 @@ def import_basic_english_words(directory):
                 for line in f:
                     basic_english_words.append(line)
     basic_english_words = [line.rstrip('\n') for line in basic_english_words]
+    basic_english_words.sort()
     return basic_english_words
 
 def separate_to_buckets(input_words_array):
@@ -32,7 +33,6 @@ def separate_to_buckets(input_words_array):
                 buckets[len(word)].append(word)
                 break
     return buckets
-
 
 def transform_to_number_sequence (input_string):
     letters = {}
