@@ -29,7 +29,6 @@ class TestSeparationToBuckets(unittest.TestCase):
         expected = {1:['I','I'],2:['Hi','My','is','am'],3:['old','are','not'],4:['name','Kate'],5:['years'],8:['nineteen']}
         self.assertEqual(actual,expected)
 
-
 class TestTransformationBucketsToSequence(unittest.TestCase):
 
     def test_transform_buckets_to_sequence_less_than_hundred(self):
@@ -59,7 +58,7 @@ class TestImport(unittest.TestCase):
         self.assertRaises(IOError,decoder.import_input_text('bad_input_directory'))
 
     def test_import_text(self):
-        expected = "Hi! My name is Kate? I am nineteen years old, are not I?"
+        expected = "P sprl dhajopun jhyavvuz huk kyhdpun wpjabylz mvy tf tvaoly. Aopz pz aol alza zlxblujl."
         actual = decoder.import_input_text('input')
         self.assertEqual(expected, actual)
 
