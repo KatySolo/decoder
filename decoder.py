@@ -33,19 +33,26 @@ def import_input_text(directory):
 
 def separate_to_buckets(input_words_array):
     buckets = {}
+    word_memo = {}
     for word in input_words_array:
         if len(buckets) == 0:
-            buckets[len(word)] = [word]
+            word_memo[word] = ""
+            buckets[len(word)] = [word_memo]
+            word_memo={}
             continue
         for key in buckets.keys():
             if key != len(word):
                 if len(word) in buckets.keys():
                     continue
                 else:
-                    buckets[len(word)] = [word]
+                    word_memo[word] = ""
+                    buckets[len(word)] = [word_memo]
+                    word_memo = {}
                 break
             else:
-                buckets[len(word)].append(word)
+                word_memo[word]=""
+                buckets[len(word)].append(word_memo)
+                word_memo ={}
                 break
     return buckets
 
@@ -65,11 +72,11 @@ def transform_to_number_sequence (input_string):
 
 
 def extract_hundred_sequence_from_buckets(buckets):
-    sequence_buckets = {}
-    for i in buckets.keys():
-        sequence_buckets[i] = []
+    sequence_buckets = buckets.copy()
+    for i in sequence_buckets.keys():
         for n in range(min(len(buckets[i]),100)):
-            sequence_buckets[i].append(transform_to_number_sequence(buckets[i][n]))
+            for j in sequence_buckets[i][n].keys():
+                sequence_buckets[i][n][j] = transform_to_number_sequence(j)
     return sequence_buckets
 
 
@@ -91,7 +98,7 @@ if __name__ == '__main__':
     print (buckets)
     buckets_seq = extract_hundred_sequence_from_buckets(buckets)
     print (buckets_seq)
-    eng_words = import_basic_english_words("words")
+    eng_words = import_basic_english_words("test_words")
     eng_words = separate_to_buckets(eng_words)
     eng_words_seq = extract_hundred_sequence_from_buckets(eng_words)
     max_index = buckets_seq.keys().pop()

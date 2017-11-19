@@ -26,15 +26,20 @@ class TestSeparationToBuckets(unittest.TestCase):
     def test_separate_to_buckets(self):
         input_words_array = ["Hi","My","name","is","Kate","I","am","nineteen","years","old","are","not","I"]
         actual =  decoder.separate_to_buckets(input_words_array)
-        expected = {1:['I','I'],2:['Hi','My','is','am'],3:['old','are','not'],4:['name','Kate'],5:['years'],8:['nineteen']}
+        expected = {1:[{'I': ""},{'I':""}],2:[{'Hi':""},{'My':""},{'is':""},{'am':""}],
+                    3:[{'old':""},{'are':""},{'not':""}],
+                    4:[{'name':""},{'Kate':""}],5:[{'years':""}],8:[{'nineteen':""}]}
         self.assertEqual(actual,expected)
 
 class TestTransformationBucketsToSequence(unittest.TestCase):
 
     def test_transform_buckets_to_sequence_less_than_hundred(self):
-        expected = {1:['0','0'],2:['01','01','01','01'], 3:['012','012','012'],4:['0123','0123'],5:['01234'],8:['01023220']}
-        actual = decoder.extract_hundred_sequence_from_buckets({1:['I','I'],2:['Hi','My','is','am'],3:['old','are','not'],4:['name','Kate'],5:['years'],8:['nineteen']})
-        self.assertEqual(actual,expected)
+        expected = {1:[{'I': "0"},{'I':"0"}],2:[{'Hi':"01"},{'My':"01"},{'is':"01"},{'am':"01"}],
+                    3:[{'old':"012"},{'are':"012"},{'not':"012"}],
+                    4:[{'name':"0123"},{'Kate':"0123"}],5:[{'years':"01234"}],8:[{'nineteen':"01023220"}]}
+        actual = decoder.extract_hundred_sequence_from_buckets({1:[{'I': ""},{'I':""}],2:[{'Hi':""},{'My':""},{'is':""},{'am':""}],
+                                                                3:[{'old':""},{'are':""},{'not':""}],4:[{'name':""},{'Kate':""}],
+                                                                5:[{'years':""}],8:[{'nineteen':""}]})
 
     def test_transform_buckets_to_sequence_more_than_hundred(self):
         buckets = {}
