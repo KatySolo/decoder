@@ -87,6 +87,10 @@ def crack_the_code(english_word, coded_word):
     for i in range(len(english_word)):
         shift_alphabet[english_word[i]] = coded_word[i]
 
+
+def start_programme(input_dir, input_basic_dir):
+    pass
+
 if __name__ == '__main__':
     text = import_input_text("input")
     if text is not None:
