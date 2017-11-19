@@ -28,7 +28,7 @@ def import_input_text(directory):
         return text
     except IOError:
         print ("File not found")
-        return None
+        return  None
 
 
 def separate_to_buckets(input_words_array):
