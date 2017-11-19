@@ -85,16 +85,13 @@ def build_alphabet(english_word, coded_word):
     shift_alphabet = {i: '' for i in map(chr, range(97, 123))}
     print (english_word)
     print (coded_word)
-    for i in range(len(english_word)):
-        shift_alphabet[english_word[i]] = coded_word[i]
+    for i in range(len(coded_word)):
+        shift_alphabet[coded_word[i]] = english_word[i]
     return shift_alphabet
 
 
 def start_programme(input_dir, input_basic_dir):
-    pass
-
-if __name__ == '__main__':
-    text = import_input_text("input")
+    text = import_input_text(input_dir)
     if text is not None:
         print ('OK')
         print (text)
@@ -102,27 +99,30 @@ if __name__ == '__main__':
     print (words_array)
     buckets = separate_to_buckets(words_array)
     print (buckets)
-    buckets_seq = extract_hundred_transform_dict_sequence_from_buckets(buckets)
+    buckets_seq = extract_hundred_sequence_from_buckets(buckets)
     # all_buckets
     print (buckets_seq)
-    eng_words = import_basic_english_words("test_words")
+    eng_words = import_basic_english_words(input_basic_dir)
     eng_words = separate_to_buckets(eng_words)
-    eng_words_seq = extract_hundred_transform_dict_sequence_from_buckets(eng_words)
+    eng_words_seq = extract_hundred_sequence_from_buckets(eng_words)
     max_index = buckets_seq.keys().pop()
     print (max_index)
-    i =-1
+    i = -1
     j = -1
     shift_alphabet = {}
-    # print (eng_words[max_index])
+    print (eng_words[max_index])
     for eng_word in eng_words_seq[max_index]:
         i += 1
         for word in buckets_seq[max_index]:
             j += 1
-            if eng_word.find(word) != -1:
-                print ("found matching at (" + str(i) + ',' + str(j)+')')
-                print (word + ' in ' + eng_word)
-                print ("trying convert " + eng_words[max_index][i] + ' to '+ buckets[max_index][j])
-                shift_alphabet = build_alphabet(eng_words[max_index][i], buckets[max_index][j])
-                replace_all_found_letters(shift_alphabet, all_buckets[max_index])
+            if eng_word[eng_word.keys()[0]].find(word[word.keys()[0]]) != -1:
+                print ("found matching at (" + str(i) + ',' + str(j) + ')')
+                print ("trying convert " + eng_word.keys()[0] + ' to ' + word.keys()[0])
+                shift_alphabet = build_alphabet(eng_word.keys()[0], word.keys()[0])
+                # replace_all_found_letters(shift_alphabet, all_buckets[max_index])
 
         j = -1
+    pass
+
+if __name__ == '__main__':
+    start_programme("input","words")
