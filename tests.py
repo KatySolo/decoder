@@ -40,6 +40,7 @@ class TestTransformationBucketsToSequence(unittest.TestCase):
         actual = decoder.extract_hundred_sequence_from_buckets({1:[{'I': ""},{'I':""}],2:[{'Hi':""},{'My':""},{'is':""},{'am':""}],
                                                                 3:[{'old':""},{'are':""},{'not':""}],4:[{'name':""},{'Kate':""}],
                                                                 5:[{'years':""}],8:[{'nineteen':""}]})
+        self.assertEqual(actual,expected)
 
     def test_transform_buckets_to_sequence_more_than_hundred(self):
         buckets = {}
@@ -48,7 +49,7 @@ class TestTransformationBucketsToSequence(unittest.TestCase):
         three_letters_sequences = ['010' for i in range (100)]
         buckets[3] = three_letters_words
         sequence_buckets[3] = three_letters_sequences
-        actual = decoder.extract_hundred_sequence_from_buckets(buckets)
+        actual = decoder.extract_hundred_transform_dict_sequence_from_buckets(buckets)
         expected = sequence_buckets
         self.assertEqual(actual, expected)
 
@@ -76,7 +77,6 @@ class TestChainTranformation(unittest.TestCase):
     #     actual = decoder.extract_hundred_sequence_from_buckets(actual)
     #     self.assertEqual(expected,actual)
         pass
-
 
 
 if __name__ == '__main__':
