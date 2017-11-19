@@ -64,21 +64,36 @@ def transform_to_number_sequence (input_string):
     return number_sequence
 
 
-def extract_hundred_sequence_from_buckets(buckets):
+def extract_hundred_transform_dict_sequence_from_buckets(buckets):
+    # buckets_with_masks = {}
+    # matched_mask_and_sequence = {}
+    # for i in buckets.keys():
+    #     buckets_with_masks[i] = {}
+    #     for n in range(min(len(buckets[i]), 100)):
+    #         buckets_with_masks[i].append(transform_to_number_sequence(buckets[i][n]))
+
+    buckets_with_masks={}
+    words_with_masks = {}
     sequence_buckets = {}
     for i in buckets.keys():
         sequence_buckets[i] = []
         for n in range(min(len(buckets[i]),100)):
+            number_sequence = transform_to_number_sequence(buckets[i][n])
+
+            # words_with_masks[buckets[i][n]] =
             sequence_buckets[i].append(transform_to_number_sequence(buckets[i][n]))
     return sequence_buckets
 
+# [1:['a':'0','b':'0'],2:['ab':'01','aa':'00']]
 
-def crack_the_code(english_word, coded_word):
+
+def build_alphabet(english_word, coded_word):
     shift_alphabet = {i: '' for i in map(chr, range(97, 123))}
     print (english_word)
     print (coded_word)
     for i in range(len(english_word)):
         shift_alphabet[english_word[i]] = coded_word[i]
+    return shift_alphabet
 
 if __name__ == '__main__':
     text = import_input_text("input")
@@ -89,15 +104,17 @@ if __name__ == '__main__':
     print (words_array)
     buckets = separate_to_buckets(words_array)
     print (buckets)
-    buckets_seq = extract_hundred_sequence_from_buckets(buckets)
+    buckets_seq = extract_hundred_transform_dict_sequence_from_buckets(buckets)
+    # all_buckets
     print (buckets_seq)
     eng_words = import_basic_english_words("words")
     eng_words = separate_to_buckets(eng_words)
-    eng_words_seq = extract_hundred_sequence_from_buckets(eng_words)
+    eng_words_seq = extract_hundred_transform_dict_sequence_from_buckets(eng_words)
     max_index = buckets_seq.keys().pop()
     print (max_index)
-    i =0
-    j = 0
+    i =-1
+    j = -1
+    shift_alphabet = {}
     # print (eng_words[max_index])
     for eng_word in eng_words_seq[max_index]:
         i += 1
@@ -107,5 +124,7 @@ if __name__ == '__main__':
                 print ("found matching at (" + str(i) + ',' + str(j)+')')
                 print (word + ' in ' + eng_word)
                 print ("trying convert " + eng_words[max_index][i] + ' to '+ buckets[max_index][j])
-                crack_the_code(eng_words[max_index][i],buckets[max_index][j])
-        j = 0
+                shift_alphabet = build_alphabet(eng_words[max_index][i], buckets[max_index][j])
+                replace_all_found_letters(shift_alphabet, all_buckets[max_index])
+
+        j = -1
