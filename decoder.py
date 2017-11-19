@@ -33,19 +33,26 @@ def import_input_text(directory):
 
 def separate_to_buckets(input_words_array):
     buckets = {}
+    word_memo = {}
     for word in input_words_array:
         if len(buckets) == 0:
-            buckets[len(word)] = [word]
+            word_memo[word] = ""
+            buckets[len(word)] = [word_memo]
+            word_memo={}
             continue
         for key in buckets.keys():
             if key != len(word):
                 if len(word) in buckets.keys():
                     continue
                 else:
-                    buckets[len(word)] = [word]
+                    word_memo[word] = ""
+                    buckets[len(word)] = [word_memo]
+                    word_memo = {}
                 break
             else:
-                buckets[len(word)].append(word)
+                word_memo[word]=""
+                buckets[len(word)].append(word_memo)
+                word_memo ={}
                 break
     return buckets
 
@@ -63,25 +70,12 @@ def transform_to_number_sequence (input_string):
             number_sequence += str(letters[letter])
     return number_sequence
 
-
-def extract_hundred_transform_dict_sequence_from_buckets(buckets):
-    # buckets_with_masks = {}
-    # matched_mask_and_sequence = {}
-    # for i in buckets.keys():
-    #     buckets_with_masks[i] = {}
-    #     for n in range(min(len(buckets[i]), 100)):
-    #         buckets_with_masks[i].append(transform_to_number_sequence(buckets[i][n]))
-
-    buckets_with_masks={}
-    words_with_masks = {}
-    sequence_buckets = {}
-    for i in buckets.keys():
-        sequence_buckets[i] = []
+def extract_hundred_sequence_from_buckets(buckets):
+    sequence_buckets = buckets.copy()
+    for i in sequence_buckets.keys():
         for n in range(min(len(buckets[i]),100)):
-            number_sequence = transform_to_number_sequence(buckets[i][n])
-
-            # words_with_masks[buckets[i][n]] =
-            sequence_buckets[i].append(transform_to_number_sequence(buckets[i][n]))
+            for j in sequence_buckets[i][n].keys():
+                sequence_buckets[i][n][j] = transform_to_number_sequence(j)
     return sequence_buckets
 
 # [1:['a':'0','b':'0'],2:['ab':'01','aa':'00']]
@@ -95,6 +89,10 @@ def build_alphabet(english_word, coded_word):
         shift_alphabet[english_word[i]] = coded_word[i]
     return shift_alphabet
 
+
+def start_programme(input_dir, input_basic_dir):
+    pass
+
 if __name__ == '__main__':
     text = import_input_text("input")
     if text is not None:
@@ -107,7 +105,7 @@ if __name__ == '__main__':
     buckets_seq = extract_hundred_transform_dict_sequence_from_buckets(buckets)
     # all_buckets
     print (buckets_seq)
-    eng_words = import_basic_english_words("words")
+    eng_words = import_basic_english_words("test_words")
     eng_words = separate_to_buckets(eng_words)
     eng_words_seq = extract_hundred_transform_dict_sequence_from_buckets(eng_words)
     max_index = buckets_seq.keys().pop()
